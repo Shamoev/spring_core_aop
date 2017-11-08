@@ -3,8 +3,16 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="client" class="com.yet.spring.core.beans.Client"/>
+    <bean id="client" class="com.yet.spring.core.beans.Client">
+        <constructor-arg value="1"/>
+        <constructor-arg value="Shamoev"/>
+    </bean>
+
     <bean id="consoleEventLogger" class="com.yet.spring.core.beans.ConsoleEventLogger"/>
-    <bean id="app" class="com.yet.spring.core.App"/>
+
+    <bean id="app" class="com.yet.spring.core.App">
+        <constructor-arg ref="client"/>
+        <constructor-arg ref="consoleEventLogger"/>
+    </bean>
 
 </beans>

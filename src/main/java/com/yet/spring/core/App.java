@@ -3,6 +3,7 @@ package com.yet.spring.core;
 import com.yet.spring.core.beans.Client;
 import com.yet.spring.core.beans.ConsoleEventLogger;
 import com.yet.spring.core.beans.EventLogger;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
     Client client;
@@ -13,14 +14,14 @@ public class App {
         this.eventLogger = eventLogger;
     }
 
-    public App() {
-    }
-
     public static void main(String[] args) {
-        App app = new App();
-        app.client = new Client("1", "Shamoev");
-        app.eventLogger = new ConsoleEventLogger();
+        //ApplicationContext
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
 
+        // bean by class
+        // App app = (App)context.getBean(App.class);
+
+        App app = (App)context.getBean("app");
 
         app.logEvent("Some event for user 1");
     }
