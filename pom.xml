@@ -18,6 +18,11 @@
             <artifactId>spring-context</artifactId>
             <version>${spring.ver}</version>
         </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
     </dependencies>
 
 </project>
