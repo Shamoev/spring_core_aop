@@ -15,4 +15,14 @@
         <constructor-arg ref="consoleEventLogger"/>
     </bean>
 
+    <!--new Date for each new event-->
+    <bean id="event" class="com.yet.spring.core.loggers.Event" scope="prototype">
+        <constructor-arg>
+            <bean class="java.util.Date"/>
+        </constructor-arg>
+        <constructor-arg ref="dateFormat"/>
+    </bean>
+
+    <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance"/>
+
 </beans>
