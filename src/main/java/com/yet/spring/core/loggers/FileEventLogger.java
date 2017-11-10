@@ -1,5 +1,6 @@
 package com.yet.spring.core.loggers;
 
+import com.yet.spring.core.beans.Event;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -17,6 +18,7 @@ public class FileEventLogger implements EventLogger {
     public void logEvent(Event event) {
         try {
             FileUtils.writeStringToFile(file, event.toString(), Charset.forName("ISO-8859-1"), true);
+            FileUtils.writeStringToFile(file, "\n", Charset.forName("ISO-8859-1"), true);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,7 @@
 package com.yet.spring.core.loggers;
 
+import com.yet.spring.core.beans.Event;
+
 import java.util.ArrayList;
 import java.util.List;
 
