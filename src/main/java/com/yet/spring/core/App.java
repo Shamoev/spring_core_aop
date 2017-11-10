@@ -20,6 +20,9 @@ public class App {
         //ApplicationContext
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
 
+        // Child context
+        // ApplicationContext child = new ClassPathXmlApplicationContext("child.xml", "parent.xml");
+
         // bean by class
         // App app = (App)context.getBean(App.class);
 
