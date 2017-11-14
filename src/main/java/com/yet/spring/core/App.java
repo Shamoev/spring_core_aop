@@ -15,6 +15,7 @@ public class App {
     private EventLogger defaultLogger;
 
     private Map<EventType, EventLogger> loggers;
+    private String startupMessage;
 
     public App(Client client, EventLogger defaultLogger, Map<EventType, EventLogger> loggers) {
         this.client = client;
@@ -23,16 +24,15 @@ public class App {
     }
 
     public static void main(String[] args) {
-        //ApplicationContext
+
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
 
-        // Child context
-        // ApplicationContext child = new ClassPathXmlApplicationContext("child.xml", "parent.xml");
-
-        // bean by class
-        // App app = (App)context.getBean(App.class);
-
         App app = (App)context.getBean("app");
+
+        System.out.println(app.startupMessage);
+
+        Client client = context.getBean(Client.class);
+        System.out.println("Client says: " + client.getGreeting());
 
         Event event = context.getBean(Event.class);
         app.logEvent(EventType.INFO, event, "Some event for user 1");
@@ -45,6 +45,23 @@ public class App {
 
 
         context.close();
+    }
+
+    public EventLogger getDefaultLogger() {
+        return defaultLogger;
+    }
+
+    public void setDefaultLogger(EventLogger defaultLogger) {
+        this.defaultLogger = defaultLogger;
+    }
+
+    public String getStartupMessage() {
+
+        return startupMessage;
+    }
+
+    public void setStartupMessage(String startupMessage) {
+        this.startupMessage = startupMessage;
     }
 
     void logEvent(EventType eventType, Event event, String msg) {

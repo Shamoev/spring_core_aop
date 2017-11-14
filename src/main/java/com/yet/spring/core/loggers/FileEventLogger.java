@@ -7,21 +7,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-public class FileEventLogger implements EventLogger {
-    private String fileName;
+public class FileEventLogger extends AbstractLogger {
+
     private File file;
+
+    private String fileName;
 
     public FileEventLogger(String filename) {
         this.fileName = filename;
-    }
-
-    public void logEvent(Event event) {
-        try {
-            FileUtils.writeStringToFile(file, event.toString(), Charset.forName("ISO-8859-1"), true);
-            FileUtils.writeStringToFile(file, "\n", Charset.forName("ISO-8859-1"), true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void init() {
@@ -35,6 +28,15 @@ public class FileEventLogger implements EventLogger {
                 throw new IllegalArgumentException("Can't create file", e);
             }
 
+        }
+    }
+
+    public void logEvent(Event event) {
+        try {
+            FileUtils.writeStringToFile(file, event.toString(), Charset.forName("ISO-8859-1"), true);
+            FileUtils.writeStringToFile(file, "\n", Charset.forName("ISO-8859-1"), true);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

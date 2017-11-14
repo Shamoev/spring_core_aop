@@ -31,8 +31,12 @@
 
     <bean id="app" class="com.yet.spring.core.App">
         <constructor-arg ref="client"/>
-        <constructor-arg ref="cachedEventLogger"/>
+        <constructor-arg value="#{T(com.yet.spring.core.beans.Event).isDay(5, 17) ? cachedEventLogger : consoleEventLogger}"/>
         <constructor-arg ref="loggerMap"/>
+        <property name="startupMessage" value="#{'Hello user ' +
+            ( systemProperties['os.name'].contains('Windows') ?
+                systemEnvironment['USERNAME'] : systemEnvironment['USER'] ) +
+                '. Default logger is ' + app.defaultLogger.name }"/>
     </bean>
 
     <utils:map id="loggerMap" key-type="com.yet.spring.core.beans.EventType" value-type="com.yet.spring.core.loggers.EventLogger">
@@ -40,29 +44,11 @@
         <entry key="ERROR" value-ref="combinedEventLogger"/>
     </utils:map>
 
-
-
     <!--new Date for each new event-->
     <bean id="event" class="com.yet.spring.core.beans.Event" scope="prototype">
-        <constructor-arg>
-            <bean class="java.util.Date"/>
-        </constructor-arg>
-        <constructor-arg ref="dateFormat"/>
+        <constructor-arg value="#{new java.util.Date()}"/>
+        <constructor-arg value="#{T(java.text.DateFormat).getDateTimeInstance()}" />
     </bean>
-
-    <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance"/>
-
-    <!--abstract bean will not be created, can be used as parent, don't have to map to some class-->
-    <bean id="abstractBean" abstract="true"/>
-
-    <!--depends-on = ... -> create after ...-->
-
-    <!--lazy-init="true" -> bean will be created after getBean(...)-->
-    <!--<beans default-lazy-int="true"> ...</beans>
-        if you have a few xml files for lazy and not-lazy initialization -->
-
-    <!--several xml files
-        <import resource="spring.xml"/>-->
 
     <bean id="listener" class="com.yet.spring.core.util.Listener"/>
 
