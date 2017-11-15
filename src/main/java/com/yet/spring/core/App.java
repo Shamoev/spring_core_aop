@@ -1,5 +1,6 @@
 package com.yet.spring.core;
 
+import com.yet.spring.core.aspects.StatisticsAspect;
 import com.yet.spring.core.beans.Client;
 import com.yet.spring.core.beans.Event;
 import com.yet.spring.core.beans.EventType;
@@ -15,7 +16,10 @@ public class App {
     private EventLogger defaultLogger;
 
     private Map<EventType, EventLogger> loggers;
+
     private String startupMessage;
+
+    private StatisticsAspect statisticsAspect;
 
     public App(Client client, EventLogger defaultLogger, Map<EventType, EventLogger> loggers) {
         this.client = client;
@@ -43,8 +47,17 @@ public class App {
         event = context.getBean(Event.class);
         app.logEvent(null, event, "Some event for user 3");
 
+        app.outputLoggingCounter();
 
         context.close();
+    }
+
+    public StatisticsAspect getStatisticsAspect() {
+        return statisticsAspect;
+    }
+
+    public void setStatisticsAspect(StatisticsAspect statisticsAspect) {
+        this.statisticsAspect = statisticsAspect;
     }
 
     public EventLogger getDefaultLogger() {
@@ -74,5 +87,14 @@ public class App {
         }
 
         logger.logEvent(event);
+    }
+
+    private void outputLoggingCounter() {
+        if (statisticsAspect != null) {
+            System.out.println("Loggers statistics. Number of calls: ");
+            for (Map.Entry<Class<?>, Integer> entry: statisticsAspect.getCounter().entrySet()) {
+                System.out.println("    " + entry.getKey().getSimpleName() + ": " + entry.getValue());
+            }
+        }
     }
 }
