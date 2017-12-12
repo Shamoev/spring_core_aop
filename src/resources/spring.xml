@@ -20,6 +20,7 @@
         <property name="locations">
             <list>
                 <value>classpath:client.properties</value>
+                <value>classpath:db.properties</value>
             </list>
         </property>
         <property name="ignoreResourceNotFound" value="true"/>

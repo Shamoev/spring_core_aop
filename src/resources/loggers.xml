@@ -21,6 +21,7 @@
      <list>
          <ref bean="consoleEventLogger"/>
          <ref bean="fileEventLogger"/>
+         <ref bean="dbLogger"/>
      </list>
         </constructor-arg>
     </bean>
